@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EasyPromoMusic Publishing — Kontra</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #F0D98C;
+    --dark: #0A0A0A;
+    --dark2: #141414;
+    --dark3: #1E1E1E;
+    --white: #FFFFFF;
+    --gray: #888888;
+    --lgray: #F5F5F5;
+    --mgray: #DDDDDD;
+    --dgray: #444444;
+    --success: #2ECC71;
+    --radius: 4px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--dark);
+    color: var(--white);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--dark);
+    border-bottom: 3px solid var(--gold);
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-brand { display: flex; align-items: center; gap: 16px; }
+  .header-logo {
+    width: 44px; height: 44px;
+    background: var(--gold);
+    border-radius: 2px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    color: var(--dark);
+    font-size: 20px;
+  }
+  .header-title { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--white); }
+  .header-sub { font-size: 11px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; }
+  .lang-toggle { display: flex; gap: 6px; }
+  .lang-btn {
+    padding: 6px 14px;
+    border: 1px solid var(--gold);
+    background: transparent;
+    color: var(--gold);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: var(--radius);
+    transition: all 0.2s;
+  }
+  .lang-btn.active, .lang-btn:hover { background: var(--gold); color: var(--dark); }
+
+  /* STEPS */
+  .steps-bar {
+    background: var(--dark2);
+    border-bottom: 1px solid #222;
+    padding: 0 40px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+  }
+  .step-tab {
+    padding: 16px 24px;
+    font-size: 13px;
+    color: var(--gray);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .step-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+  .step-tab.done { color: var(--success); }
+  .step-num {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: #333;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .step-tab.active .step-num { background: var(--gold); color: var(--dark); }
+  .step-tab.done .step-num { background: var(--success); color: var(--white); }
+
+  /* MAIN */
+  .main { max-width: 860px; margin: 0 auto; padding: 40px 20px 80px; }
+
+  /* SECTION */
+  .section { display: none; animation: fadeIn 0.3s ease; }
+  .section.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* SECTION TITLE */
+  .section-header {
+    background: linear-gradient(135deg, var(--dark2), var(--dark3));
+    border: 1px solid #2a2a2a;
+    border-left: 4px solid var(--gold);
+    padding: 24px 28px;
+    margin-bottom: 28px;
+    border-radius: var(--radius);
+  }
+  .section-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+  .section-header p { font-size: 13px; color: var(--gray); }
+
+  /* GOLD BAR */
+  .gold-bar {
+    background: var(--gold);
+    color: var(--dark);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 10px 16px;
+    margin: 24px 0 12px;
+    border-radius: var(--radius);
+  }
+
+  /* CONTRACT TEXT */
+  .contract-box {
+    background: var(--dark2);
+    border: 1px solid #2a2a2a;
+    border-radius: var(--radius);
+    padding: 28px;
+    margin-bottom: 20px;
+    max-height: 520px;
+    overflow-y: auto;
+    line-height: 1.7;
+    font-size: 14px;
+    color: #ccc;
+  }
+  .contract-box::-webkit-scrollbar { width: 4px; }
+  .contract-box::-webkit-scrollbar-track { background: #1a1a1a; }
+  .contract-box::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+  .contract-box h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--white);
+    font-size: 16px;
+    margin: 20px 0 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #2a2a2a;
+  }
+  .contract-box h3:first-child { margin-top: 0; }
+  .contract-box p { margin-bottom: 12px; }
+  .contract-box ul { margin: 8px 0 12px 20px; }
+  .contract-box li { margin-bottom: 4px; }
+  .contract-box .gold-txt { color: var(--gold); font-weight: 600; }
+
+  .read-confirm {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: var(--radius);
+    margin-bottom: 24px;
+    cursor: pointer;
+  }
+  .read-confirm input[type="checkbox"] {
+    width: 18px; height: 18px;
+    accent-color: var(--gold);
+    cursor: pointer;
+  }
+  .read-confirm label { font-size: 14px; color: var(--gray); cursor: pointer; }
+
+  /* PLAN SELECTOR */
+  .plans-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+  @media(max-width: 600px) { .plans-grid { grid-template-columns: 1fr; } }
+  .plan-card {
+    background: var(--dark2);
+    border: 2px solid #2a2a2a;
+    border-radius: var(--radius);
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .plan-card:hover { border-color: var(--gold); }
+  .plan-card.selected { border-color: var(--gold); background: #1a1500; }
+  .plan-card input[type="radio"] { display: none; }
+  .plan-name { font-weight: 700; font-size: 13px; color: var(--white); margin-bottom: 4px; }
+  .plan-price { font-size: 16px; font-weight: 700; color: var(--gold); margin-bottom: 4px; }
+  .plan-split { font-size: 11px; color: var(--gray); }
+
+  /* FORM */
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media(max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group.full { grid-column: 1 / -1; }
+  .form-group label { font-size: 12px; color: var(--gold); font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
+  .form-group input, .form-group select, .form-group textarea {
+    background: var(--dark2);
+    border: 1px solid #333;
+    color: var(--white);
+    padding: 12px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    border-radius: var(--radius);
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color: var(--gold);
+  }
+  .form-group textarea { resize: vertical; min-height: 80px; }
+  .form-group select option { background: var(--dark2); }
+
+  /* SIGNATURE */
+  .sig-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+  .sig-tab {
+    padding: 8px 20px;
+    border: 1px solid #333;
+    background: transparent;
+    color: var(--gray);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    border-radius: var(--radius);
+    transition: all 0.2s;
+  }
+  .sig-tab.active { border-color: var(--gold); color: var(--gold); background: #1a1500; }
+
+  .sig-panel { display: none; }
+  .sig-panel.active { display: block; }
+
+  #signatureCanvas {
+    width: 100%;
+    height: 180px;
+    background: var(--dark2);
+    border: 2px dashed #333;
+    border-radius: var(--radius);
+    cursor: crosshair;
+    display: block;
+    touch-action: none;
+  }
+  #signatureCanvas.has-sig { border-color: var(--gold); border-style: solid; }
+
+  .sig-typed-input {
+    width: 100%;
+    background: var(--dark2);
+    border: 2px solid #333;
+    color: var(--gold-light);
+    padding: 20px 24px;
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    border-radius: var(--radius);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .sig-typed-input:focus, .sig-typed-input.has-sig { border-color: var(--gold); }
+  .sig-typed-input::placeholder { color: #333; font-size: 18px; font-family: 'DM Sans', sans-serif; }
+
+  .sig-actions { display: flex; gap: 8px; margin-top: 8px; }
+  .sig-clear {
+    padding: 8px 16px;
+    background: transparent;
+    border: 1px solid #444;
+    color: var(--gray);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: var(--radius);
+    transition: all 0.2s;
+  }
+  .sig-clear:hover { border-color: #ff4444; color: #ff4444; }
+
+  /* DATE */
+  .date-display {
+    padding: 14px 16px;
+    background: var(--dark2);
+    border: 1px solid #333;
+    border-radius: var(--radius);
+    font-size: 14px;
+    color: var(--gray);
+  }
+  .date-display span { color: var(--gold); }
+
+  /* BUTTONS */
+  .btn-row { display: flex; gap: 12px; justify-content: flex-end; margin-top: 28px; }
+  .btn {
+    padding: 13px 28px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: var(--radius);
+    transition: all 0.2s;
+    border: none;
+  }
+  .btn-prev { background: transparent; border: 1px solid #333; color: var(--gray); }
+  .btn-prev:hover { border-color: var(--gold); color: var(--gold); }
+  .btn-next { background: var(--gold); color: var(--dark); }
+  .btn-next:hover { background: var(--gold-light); }
+  .btn-next:disabled { background: #333; color: #666; cursor: not-allowed; }
+  .btn-submit { background: var(--success); color: var(--white); }
+  .btn-submit:hover { background: #27ae60; }
+
+  /* SUCCESS */
+  .success-screen {
+    text-align: center;
+    padding: 60px 20px;
+  }
+  .success-icon {
+    width: 80px; height: 80px;
+    background: var(--success);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 36px;
+    margin: 0 auto 24px;
+  }
+  .success-screen h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .success-screen p { color: var(--gray); font-size: 15px; line-height: 1.6; }
+  .success-details {
+    background: var(--dark2);
+    border: 1px solid #2a2a2a;
+    border-radius: var(--radius);
+    padding: 20px;
+    margin: 24px auto;
+    max-width: 480px;
+    text-align: left;
+  }
+  .success-details .row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #222;
+    font-size: 13px;
+  }
+  .success-details .row:last-child { border-bottom: none; }
+  .success-details .row span:first-child { color: var(--gray); }
+  .success-details .row span:last-child { color: var(--gold); font-weight: 600; }
+
+  /* RESPONSIVE */
+  @media(max-width: 640px) {
+    .header { padding: 16px 20px; }
+    .steps-bar { padding: 0 20px; }
+    .main { padding: 24px 16px 60px; }
+    .btn-row { flex-direction: column; }
+    .btn { width: 100%; text-align: center; }
+  }
+
+  .required { color: #ff6b6b; }
+  .error-msg { font-size: 11px; color: #ff6b6b; margin-top: 2px; display: none; }
+  .error .error-msg { display: block; }
+  .error input, .error select { border-color: #ff6b6b; }
+
+  .info-note {
+    font-size: 12px;
+    color: var(--gray);
+    margin-top: 8px;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-brand">
+    <div class="header-logo">E</div>
+    <div>
+      <div class="header-title">EasyPromoMusic Publishing</div>
+      <div class="header-sub">From Upload to Audience · Since 2014</div>
+    </div>
+  </div>
+  <div class="lang-toggle">
+    <button class="lang-btn active" onclick="setLang('fr')">FR</button>
+    <button class="lang-btn" onclick="setLang('kr')">KR</button>
+  </div>
+</div>
+
+<!-- STEPS -->
+<div class="steps-bar">
+  <div class="step-tab active" id="tab-1" onclick="goTo(1)">
+    <span class="step-num">1</span>
+    <span class="step-label" data-fr="Contrat" data-kr="Kontra">Contrat</span>
+  </div>
+  <div class="step-tab" id="tab-2" onclick="goTo(2)">
+    <span class="step-num">2</span>
+    <span class="step-label" data-fr="Plan" data-kr="Plan">Plan</span>
+  </div>
+  <div class="step-tab" id="tab-3" onclick="goTo(3)">
+    <span class="step-num">3</span>
+    <span class="step-label" data-fr="Informations" data-kr="Enfòmasyon">Informations</span>
+  </div>
+  <div class="step-tab" id="tab-4" onclick="goTo(4)">
+    <span class="step-num">4</span>
+    <span class="step-label" data-fr="Projet Musical" data-kr="Pwojè Mizikal">Projet Musical</span>
+  </div>
+  <div class="step-tab" id="tab-5" onclick="goTo(5)">
+    <span class="step-num">5</span>
+    <span class="step-label" data-fr="Signature" data-kr="Siyati">Signature</span>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- STEP 1: CONTRAT -->
+  <div class="section active" id="section-1">
+    <div class="section-header">
+      <h2 data-fr="Contrat de Distribution et Services Musicaux" data-kr="Kontra Distribisyon ak Sèvis Mizikal">Contrat de Distribution et Services Musicaux</h2>
+      <p data-fr="Lisez attentivement le contrat avant de continuer." data-kr="Li kontra a atantivman anvan ou kontinye.">Lisez attentivement le contrat avant de continuer.</p>
+    </div>
+
+    <div class="contract-box" id="contractBox">
+      <h3 data-fr="Préambule" data-kr="Préambule">Préambule</h3>
+      <p>EasyPromoMusic Publishing est une agence de services musicaux digitaux fondée en 2014 par Fanfan Karl Henry, basée à Port-au-Prince, Haïti. Nous accompagnons les artistes indépendants, les DJs et les labels dans la distribution, la promotion et la monétisation de leur musique — localement et à l'international.</p>
+
+      <h3>Article 1 — <span data-fr="Objet du Contrat" data-kr="Objè Kontra a">Objet du Contrat</span></h3>
+      <p>Ce contrat définit les modalités selon lesquelles EasyPromoMusic Publishing fournit à l'Artiste des services de distribution digitale et de promotion musicale. <span class="gold-txt">L'Artiste reste le propriétaire exclusif et intégral de ses œuvres musicales et conserve l'intégralité de ses droits d'auteur.</span></p>
+
+      <h3>Article 2 — <span data-fr="Nature Non-Exclusive" data-kr="Nati Non-Eksklizif">Nature Non-Exclusive</span></h3>
+      <p>Ce contrat est <span class="gold-txt">strictement NON-EXCLUSIF</span>. L'Artiste demeure libre de signer avec d'autres distributeurs, labels ou partenaires sans restriction ni pénalité. Aucun transfert de droits de propriété intellectuelle n'est requis.</p>
+
+      <h3>Article 3 — <span data-fr="Durée" data-kr="Dire">Durée</span></h3>
+      <p>Le contrat est valable pour une durée de <span class="gold-txt">12 mois</span>, renouvelable par accord mutuel écrit. Pour les plans par projet, la durée correspond à la période active du projet musical concerné.</p>
+
+      <h3>Article 4 — <span data-fr="Paiement et Partage des Revenus" data-kr="Peman ak Pataj Revni">Paiement et Partage des Revenus</span></h3>
+      <p>Le paiement du plan choisi est exigé avant toute distribution. Les revenus sont reversés à l'Artiste dans un délai maximum de <span class="gold-txt">30 jours</span> suivant leur réception.</p>
+      <ul>
+        <li>Basic: <span class="gold-txt">70%</span> Artiste / 30% Label — Reporting trimestriel</li>
+        <li>Standard: <span class="gold-txt">70%</span> Artiste / 30% Label — Reporting mensuel</li>
+        <li>Premium: <span class="gold-txt">75%</span> Artiste / 25% Label — Reporting bi-mensuel</li>
+        <li>Advanced Label: <span class="gold-txt">80%</span> Artiste / 20% Label — Reporting hebdomadaire</li>
+        <li>Elite Label: <span class="gold-txt">85%</span> Artiste / 15% Label — Reporting hebdomadaire</li>
+      </ul>
+
+      <h3>Article 5 — <span data-fr="Obligations du Label" data-kr="Obligasyon Label la">Obligations du Label</span></h3>
+      <p>EasyPromoMusic Publishing s'engage à: assurer la distribution sur Spotify, Apple Music, Deezer, Audiomack, YouTube, Amazon Music, TikTok et autres plateformes; fournir un reporting régulier et transparent; offrir un support promotionnel conforme au plan choisi; garantir la traçabilité complète des revenus.</p>
+
+      <h3>Article 6 — <span data-fr="Obligations de l'Artiste" data-kr="Obligasyon Atistis la">Obligations de l'Artiste</span></h3>
+      <p>L'Artiste s'engage à fournir des fichiers audio WAV (44.1 kHz, 16 bits minimum), transmettre toutes les métadonnées, respecter les conditions de paiement, et ne pas soumettre de contenu violant les droits d'auteur de tiers.</p>
+
+      <h3>Article 7 — <span data-fr="Propriété Intellectuelle" data-kr="Pwopriyete Entèlektyèl">Propriété Intellectuelle</span></h3>
+      <p>L'Artiste conserve la pleine propriété de ses œuvres, y compris les codes ISRC et UPC. En cas de résiliation, les métadonnées sont restituées dans un délai de <span class="gold-txt">15 jours</span>.</p>
+
+      <h3>Article 8 — <span data-fr="Résiliation" data-kr="Rezilasyon">Résiliation</span></h3>
+      <p>L'Artiste peut résilier le contrat avec un préavis écrit de <span class="gold-txt">30 jours</span>. Les revenus accumulés sont reversés selon les pourcentages convenus. Le retrait des œuvres des plateformes est effectué dans un délai maximum de 30 jours. Aucune pénalité n'est appliquée.</p>
+
+      <h3>Article 9 — <span data-fr="Confidentialité" data-kr="Konfidyalite">Confidentialité</span></h3>
+      <p>Toutes les informations financières et contractuelles sont strictement confidentielles. Aucune des parties ne peut divulguer les termes financiers à des tiers sans accord écrit préalable.</p>
+
+      <h3>Article 10 — <span data-fr="Force Majeure" data-kr="Fòs Majè">Force Majeure</span></h3>
+      <p>Aucune des parties ne sera tenue responsable en cas de manquement résultant d'événements hors de son contrôle: catastrophes naturelles, pannes de plateformes, ou tout événement de force majeure reconnu.</p>
+
+      <h3>Article 11 — <span data-fr="Litiges et Loi Applicable" data-kr="Litij ak Lwa Aplikab">Litiges et Loi Applicable</span></h3>
+      <p>Tout différend sera d'abord réglé à l'amiable dans un délai de 30 jours. À défaut, il sera soumis au Tribunal de Première Instance de Port-au-Prince. Le contrat est régi par la loi haïtienne.</p>
+    </div>
+
+    <div class="read-confirm" onclick="toggleRead()">
+      <input type="checkbox" id="readCheck">
+      <label for="readCheck" data-fr="J'ai lu et compris l'intégralité du contrat ci-dessus." data-kr="Mwen li epi konprann tout kontra ki anwo a.">J'ai lu et compris l'intégralité du contrat ci-dessus.</label>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-next" id="btn1" onclick="goTo(2)" disabled>
+        <span data-fr="Continuer →" data-kr="Kontinye →">Continuer →</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 2: PLAN -->
+  <div class="section" id="section-2">
+    <div class="section-header">
+      <h2 data-fr="Choisissez votre Plan" data-kr="Chwazi Plan Ou">Choisissez votre Plan</h2>
+      <p data-fr="Sélectionnez le plan qui correspond à votre projet." data-kr="Chwazi plan ki koresponn ak pwojè ou.">Sélectionnez le plan qui correspond à votre projet.</p>
+    </div>
+
+    <div class="plans-grid" id="plansGrid">
+      <div class="plan-card" onclick="selectPlan(this, 'BASIC / DÉBUT', '6,700G / $50 USD', '70%')">
+        <div class="plan-name">BASIC / DÉBUT</div>
+        <div class="plan-price">6,700G / $50 USD</div>
+        <div class="plan-split">70% Artiste · Reporting trimestriel</div>
+        <div style="font-size:11px;color:#555;margin-top:8px;" data-fr="1 single · Playlists" data-kr="1 single · Playlists">1 single · Playlists</div>
+      </div>
+      <div class="plan-card" onclick="selectPlan(this, 'STANDARD / INTERMÉDIAIRE', '16,750G / $125 USD', '70%')">
+        <div class="plan-name">STANDARD / INTERMÉDIAIRE</div>
+        <div class="plan-price">16,750G / $125 USD</div>
+        <div class="plan-split">70% Artiste · Reporting mensuel</div>
+        <div style="font-size:11px;color:#555;margin-top:8px;" data-fr="3 singles ou 1 EP · Promo multi-réseaux" data-kr="3 singles oswa 1 EP · Promo multi-rezo">3 singles ou 1 EP · Promo multi-réseaux</div>
+      </div>
+      <div class="plan-card" onclick="selectPlan(this, 'PREMIUM / AVANCÉ', '33,500G / $250 USD', '75%')">
+        <div class="plan-name">PREMIUM / AVANCÉ</div>
+        <div class="plan-price">33,500G / $250 USD</div>
+        <div class="plan-split">75% Artiste · Reporting bi-mensuel</div>
+        <div style="font-size:11px;color:#555;margin-top:8px;" data-fr="EP / mini-album · Branding + SEO" data-kr="EP / mini-album · Branding + SEO">EP / mini-album · Branding + SEO</div>
+      </div>
+      <div class="plan-card" onclick="selectPlan(this, 'ADVANCED LABEL', '67,000G / $500 USD', '80%')">
+        <div class="plan-name">ADVANCED LABEL</div>
+        <div class="plan-price">67,000G / $500 USD</div>
+        <div class="plan-split">80% Artiste · Reporting hebdomadaire</div>
+        <div style="font-size:11px;color:#555;margin-top:8px;" data-fr="Album 10 titres · Campagnes 15-30 jours" data-kr="Album 10 tit · Kanpay 15-30 jou">Album 10 titres · Campagnes 15-30 jours</div>
+      </div>
+      <div class="plan-card" onclick="selectPlan(this, 'ELITE LABEL', '134,000G / $1,000 USD', '85%')">
+        <div class="plan-name">ELITE LABEL</div>
+        <div class="plan-price">134,000G / $1,000 USD</div>
+        <div class="plan-split">85% Artiste · Reporting hebdomadaire</div>
+        <div style="font-size:11px;color:#555;margin-top:8px;" data-fr="Album 15 titres · Campagnes 30-45 jours · Content ID" data-kr="Album 15 tit · Kanpay 30-45 jou · Content ID">Album 15 titres · Campagnes 30-45 jours · Content ID</div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-prev" onclick="goTo(1)"><span data-fr="← Retour" data-kr="← Retounen">← Retour</span></button>
+      <button class="btn btn-next" id="btn2" onclick="goTo(3)" disabled><span data-fr="Continuer →" data-kr="Kontinye →">Continuer →</span></button>
+    </div>
+  </div>
+
+  <!-- STEP 3: INFORMATIONS -->
+  <div class="section" id="section-3">
+    <div class="section-header">
+      <h2 data-fr="Vos Informations" data-kr="Enfòmasyon Ou">Vos Informations</h2>
+      <p data-fr="Remplissez vos informations personnelles et de contact." data-kr="Ranpli enfòmasyon pèsonèl ou ak kontak ou.">Remplissez vos informations personnelles et de contact.</p>
+    </div>
+
+    <div class="form-grid">
+      <div class="form-group" id="g-nom">
+        <label data-fr="Nom complet *" data-kr="Non konplè *">Nom complet <span class="required">*</span></label>
+        <input type="text" id="f-nom" placeholder="Jean Baptiste" oninput="validateField('nom')">
+        <span class="error-msg" data-fr="Ce champ est requis." data-kr="Jaden sa a obligatwa.">Ce champ est requis.</span>
+      </div>
+      <div class="form-group" id="g-artiste">
+        <label data-fr="Nom artiste *" data-kr="Non atis *">Nom artiste <span class="required">*</span></label>
+        <input type="text" id="f-artiste" placeholder="DJ Nova" oninput="validateField('artiste')">
+        <span class="error-msg" data-fr="Ce champ est requis." data-kr="Jaden sa a obligatwa.">Ce champ est requis.</span>
+      </div>
+      <div class="form-group" id="g-email">
+        <label data-fr="Email *" data-kr="Imèl *">Email <span class="required">*</span></label>
+        <input type="email" id="f-email" placeholder="artiste@email.com" oninput="validateField('email')">
+        <span class="error-msg" data-fr="Email invalide." data-kr="Imèl pa valid.">Email invalide.</span>
+      </div>
+      <div class="form-group" id="g-tel">
+        <label data-fr="Téléphone / WhatsApp *" data-kr="Telefòn / WhatsApp *">Téléphone / WhatsApp <span class="required">*</span></label>
+        <input type="tel" id="f-tel" placeholder="+509 XXXX XXXX" oninput="validateField('tel')">
+        <span class="error-msg" data-fr="Ce champ est requis." data-kr="Jaden sa a obligatwa.">Ce champ est requis.</span>
+      </div>
+      <div class="form-group full" id="g-adresse">
+        <label data-fr="Adresse / Localisation" data-kr="Adrès / Lokalizasyon">Adresse / Localisation</label>
+        <input type="text" id="f-adresse" placeholder="Port-au-Prince, Haiti">
+      </div>
+      <div class="form-group">
+        <label data-fr="Instagram" data-kr="Instagram">Instagram</label>
+        <input type="text" id="f-ig" placeholder="@nomartiste">
+      </div>
+      <div class="form-group">
+        <label data-fr="Facebook" data-kr="Facebook">Facebook</label>
+        <input type="text" id="f-fb" placeholder="Page ou profil">
+      </div>
+      <div class="form-group">
+        <label data-fr="TikTok" data-kr="TikTok">TikTok</label>
+        <input type="text" id="f-tt" placeholder="@nomartiste">
+      </div>
+      <div class="form-group">
+        <label data-fr="YouTube / Audiomack" data-kr="YouTube / Audiomack">YouTube / Audiomack</label>
+        <input type="text" id="f-yt" placeholder="Nom de chaîne">
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-prev" onclick="goTo(2)"><span data-fr="← Retour" data-kr="← Retounen">← Retour</span></button>
+      <button class="btn btn-next" onclick="validateStep3()"><span data-fr="Continuer →" data-kr="Kontinye →">Continuer →</span></button>
+    </div>
+  </div>
+
+  <!-- STEP 4: PROJET -->
+  <div class="section" id="section-4">
+    <div class="section-header">
+      <h2 data-fr="Votre Projet Musical" data-kr="Pwojè Mizikal Ou">Votre Projet Musical</h2>
+      <p data-fr="Décrivez le projet à distribuer." data-kr="Dekri pwojè ou vle distribiye.">Décrivez le projet à distribuer.</p>
+    </div>
+
+    <div class="form-grid">
+      <div class="form-group full" id="g-titre">
+        <label data-fr="Titre du projet *" data-kr="Tit pwojè a *">Titre du projet <span class="required">*</span></label>
+        <input type="text" id="f-titre" placeholder="Ex: Mon Premier Album" oninput="validateField('titre')">
+        <span class="error-msg" data-fr="Ce champ est requis." data-kr="Jaden sa a obligatwa.">Ce champ est requis.</span>
+      </div>
+      <div class="form-group" id="g-type">
+        <label data-fr="Type de projet *" data-kr="Kalite pwojè *">Type de projet <span class="required">*</span></label>
+        <select id="f-type" onchange="validateField('type')">
+          <option value="" data-fr="Sélectionner..." data-kr="Chwazi...">Sélectionner...</option>
+          <option value="Single">Single</option>
+          <option value="EP">EP</option>
+          <option value="Album">Album</option>
+          <option value="Mixtape DJ">Mixtape DJ</option>
+        </select>
+        <span class="error-msg" data-fr="Ce champ est requis." data-kr="Jaden sa a obligatwa.">Ce champ est requis.</span>
+      </div>
+      <div class="form-group">
+        <label data-fr="Nombre de titres" data-kr="Kantite tit">Nombre de titres</label>
+        <input type="number" id="f-ntitres" placeholder="Ex: 10" min="1">
+      </div>
+      <div class="form-group">
+        <label data-fr="Genre musical" data-kr="Jan mizik">Genre musical</label>
+        <input type="text" id="f-genre" placeholder="Ex: Rap Kreyol, Kompa...">
+      </div>
+      <div class="form-group">
+        <label data-fr="Date de sortie souhaitée" data-kr="Dat sòti swete">Date de sortie souhaitée</label>
+        <input type="date" id="f-date">
+      </div>
+      <div class="form-group full">
+        <label data-fr="Collaborateurs / Featuring" data-kr="Kolaboratè / Featuring">Collaborateurs / Featuring</label>
+        <input type="text" id="f-collab" placeholder="Ex: feat. Artiste1, prod. Producer">
+      </div>
+      <div class="form-group full">
+        <label data-fr="Lien de pré-écoute (WeTransfer, Drive...)" data-kr="Lyen pre-ekout (WeTransfer, Drive...)">Lien de pré-écoute</label>
+        <input type="url" id="f-lien" placeholder="https://...">
+      </div>
+      <div class="form-group full">
+        <label data-fr="Mode de paiement" data-kr="Mòd peman">Mode de paiement</label>
+        <select id="f-paiement">
+          <option value="" data-fr="Sélectionner..." data-kr="Chwazi...">Sélectionner...</option>
+          <option value="MonCash">MonCash (+509 3493 9923)</option>
+          <option value="NatCash">NatCash</option>
+          <option value="Zelle">Zelle</option>
+          <option value="Cash App">Cash App</option>
+          <option value="Virement bancaire" data-fr="Virement bancaire" data-kr="Virement bancaire">Virement bancaire</option>
+        </select>
+      </div>
+      <div class="form-group full">
+        <label data-fr="Objectifs / Notes" data-kr="Objektif / Nòt">Objectifs / Notes</label>
+        <textarea id="f-notes" placeholder="Décrivez vos objectifs, questions ou informations complémentaires..."></textarea>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-prev" onclick="goTo(3)"><span data-fr="← Retour" data-kr="← Retounen">← Retour</span></button>
+      <button class="btn btn-next" onclick="validateStep4()"><span data-fr="Continuer →" data-kr="Kontinye →">Continuer →</span></button>
+    </div>
+  </div>
+
+  <!-- STEP 5: SIGNATURE -->
+  <div class="section" id="section-5">
+    <div class="section-header">
+      <h2 data-fr="Signature Électronique" data-kr="Siyati Elektwonik">Signature Électronique</h2>
+      <p data-fr="Signez le contrat pour finaliser votre inscription." data-kr="Siyen kontra a pou fini enskripsyon ou.">Signez le contrat pour finaliser votre inscription.</p>
+    </div>
+
+    <div class="gold-bar" data-fr="DATE DE SIGNATURE" data-kr="DAT SIYATI">DATE DE SIGNATURE</div>
+    <div class="date-display" id="dateDisplay">
+      <span data-fr="Date:" data-kr="Dat:">Date:</span> <span id="currentDate"></span> &nbsp;|&nbsp;
+      <span data-fr="Port-au-Prince, Haïti" data-kr="Pò-Prens, Ayiti">Port-au-Prince, Haïti</span>
+    </div>
+
+    <div class="gold-bar" style="margin-top:20px;" data-fr="CHOISISSEZ VOTRE MODE DE SIGNATURE" data-kr="CHWAZI MOD SIYATI OU">CHOISISSEZ VOTRE MODE DE SIGNATURE</div>
+
+    <div class="sig-tabs">
+      <button class="sig-tab active" onclick="setSigMode('draw')" data-fr="✏️ Dessiner" data-kr="✏️ Desine">✏️ Dessiner</button>
+      <button class="sig-tab" onclick="setSigMode('type')" data-fr="⌨️ Écrire mon nom" data-kr="⌨️ Ekri non mwen">⌨️ Écrire mon nom</button>
+    </div>
+
+    <!-- DRAW -->
+    <div class="sig-panel active" id="panel-draw">
+      <canvas id="signatureCanvas" width="800" height="180"></canvas>
+      <div class="sig-actions">
+        <button class="sig-clear" onclick="clearCanvas()" data-fr="Effacer" data-kr="Efase">Effacer</button>
+        <span class="info-note" data-fr="Signez avec votre doigt ou votre souris." data-kr="Siyen ak dwèt ou oswa sourit ou.">Signez avec votre doigt ou votre souris.</span>
+      </div>
+    </div>
+
+    <!-- TYPE -->
+    <div class="sig-panel" id="panel-type">
+      <input type="text" class="sig-typed-input" id="typedSig" placeholder="Écrivez votre nom complet ici..." oninput="checkTyped()">
+      <div class="info-note" data-fr="Votre nom tapé a la même valeur juridique qu'une signature manuscrite." data-kr="Non ou tape a gen menm valè legal ak siyati men.">Votre nom tapé a la même valeur juridique qu'une signature manuscrite.</div>
+    </div>
+
+    <div style="margin-top:24px;">
+      <div class="gold-bar" data-fr="RÉCAPITULATIF" data-kr="REZIME">RÉCAPITULATIF</div>
+      <div class="success-details" style="margin:12px 0 0;">
+        <div class="row">
+          <span data-fr="Artiste" data-kr="Atis">Artiste</span>
+          <span id="recap-artiste">—</span>
+        </div>
+        <div class="row">
+          <span data-fr="Plan" data-kr="Plan">Plan</span>
+          <span id="recap-plan">—</span>
+        </div>
+        <div class="row">
+          <span data-fr="Prix" data-kr="Pri">Prix</span>
+          <span id="recap-prix">—</span>
+        </div>
+        <div class="row">
+          <span data-fr="Projet" data-kr="Pwojè">Projet</span>
+          <span id="recap-projet">—</span>
+        </div>
+        <div class="row">
+          <span>Email</span>
+          <span id="recap-email">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-prev" onclick="goTo(4)"><span data-fr="← Retour" data-kr="← Retounen">← Retour</span></button>
+      <button class="btn btn-submit" onclick="submitContract()">
+        <span data-fr="✓ Signer et Soumettre" data-kr="✓ Siyen epi Soumèt">✓ Signer et Soumettre</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="section" id="section-success">
+    <div class="success-screen">
+      <div class="success-icon">✓</div>
+      <h2 data-fr="Contrat Signé !" data-kr="Kontra Siyen!">Contrat Signé !</h2>
+      <p data-fr="Votre contrat a été soumis avec succès. Vous allez recevoir une confirmation par email. EasyPromoMusic vous contactera dans les 24 à 48 heures." data-kr="Kontra ou a soumèt avèk siksè. Ou pral resevwa yon konfirmasyon pa imèl. EasyPromoMusic ap kontakte w nan 24 a 48 è.">
+        Votre contrat a été soumis avec succès. Vous allez recevoir une confirmation par email.<br>EasyPromoMusic vous contactera dans les 24 à 48 heures.
+      </p>
+      <div class="success-details">
+        <div class="row">
+          <span data-fr="Artiste" data-kr="Atis">Artiste</span>
+          <span id="s-artiste">—</span>
+        </div>
+        <div class="row">
+          <span data-fr="Plan" data-kr="Plan">Plan</span>
+          <span id="s-plan">—</span>
+        </div>
+        <div class="row">
+          <span data-fr="Projet" data-kr="Pwojè">Projet</span>
+          <span id="s-projet">—</span>
+        </div>
+        <div class="row">
+          <span data-fr="Référence" data-kr="Referans">Référence</span>
+          <span id="s-ref">—</span>
+        </div>
+      </div>
+      <p style="margin-top:16px;">
+        <strong style="color:var(--gold)">WhatsApp:</strong> +509 3493 9923 &nbsp;|&nbsp;
+        <strong style="color:var(--gold)">Email:</strong> easypromomusic@gmail.com
+      </p>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<script>
+// ── STATE ──────────────────────────────────────────────────────────────────
+let currentStep = 1;
+let selectedPlan = { name: '', price: '', split: '' };
+let lang = 'fr';
+let sigMode = 'draw';
+let hasDrawnSig = false;
+
+// ── LANG ───────────────────────────────────────────────────────────────────
+function setLang(l) {
+  lang = l;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.lang-btn[onclick="setLang('${l}')"]`).classList.add('active');
+  document.querySelectorAll('[data-' + l + ']').forEach(el => {
+    const val = el.getAttribute('data-' + l);
+    if (val) el.textContent = val;
+  });
+}
+
+// ── STEPS ──────────────────────────────────────────────────────────────────
+function goTo(n) {
+  if (n > currentStep + 1) return;
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.step-tab').forEach((t, i) => {
+    t.classList.remove('active');
+    if (i + 1 < n) t.classList.add('done');
+    else t.classList.remove('done');
+  });
+  document.getElementById('section-' + n).classList.add('active');
+  document.getElementById('tab-' + n).classList.add('active');
+  currentStep = n;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (n === 5) updateRecap();
+}
+
+// ── STEP 1 ─────────────────────────────────────────────────────────────────
+function toggleRead() {
+  const cb = document.getElementById('readCheck');
+  cb.checked = !cb.checked;
+  document.getElementById('btn1').disabled = !cb.checked;
+}
+document.getElementById('readCheck').addEventListener('change', function() {
+  document.getElementById('btn1').disabled = !this.checked;
+});
+
+// ── STEP 2 ─────────────────────────────────────────────────────────────────
+function selectPlan(card, name, price, split) {
+  document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  selectedPlan = { name, price, split };
+  document.getElementById('btn2').disabled = false;
+}
+
+// ── STEP 3 ─────────────────────────────────────────────────────────────────
+function validateField(field) {
+  const map = {
+    nom: { id: 'f-nom', gid: 'g-nom', check: v => v.trim().length > 1 },
+    artiste: { id: 'f-artiste', gid: 'g-artiste', check: v => v.trim().length > 0 },
+    email: { id: 'f-email', gid: 'g-email', check: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
+    tel: { id: 'f-tel', gid: 'g-tel', check: v => v.trim().length > 5 },
+    titre: { id: 'f-titre', gid: 'g-titre', check: v => v.trim().length > 0 },
+    type: { id: 'f-type', gid: 'g-type', check: v => v !== '' },
+  };
+  const m = map[field];
+  const val = document.getElementById(m.id).value;
+  const grp = document.getElementById(m.gid);
+  grp.classList.toggle('error', !m.check(val));
+  return m.check(val);
+}
+
+function validateStep3() {
+  const ok = ['nom','artiste','email','tel'].map(validateField).every(Boolean);
+  if (ok) goTo(4);
+}
+
+function validateStep4() {
+  const ok = ['titre','type'].map(validateField).every(Boolean);
+  if (ok) goTo(5);
+}
+
+// ── STEP 5: SIGNATURE ──────────────────────────────────────────────────────
+const canvas = document.getElementById('signatureCanvas');
+const ctx = canvas.getContext('2d');
+let drawing = false;
+
+function resizeCanvas() {
+  const rect = canvas.parentElement.getBoundingClientRect();
+  canvas.width = rect.width;
+  ctx.strokeStyle = '#C9A84C';
+  ctx.lineWidth = 2.5;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+function getPos(e) {
+  const rect = canvas.getBoundingClientRect();
+  const src = e.touches ? e.touches[0] : e;
+  return { x: src.clientX - rect.left, y: src.clientY - rect.top };
+}
+
+canvas.addEventListener('mousedown', e => { drawing = true; ctx.beginPath(); const p = getPos(e); ctx.moveTo(p.x, p.y); });
+canvas.addEventListener('mousemove', e => { if (!drawing) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); hasDrawnSig = true; canvas.classList.add('has-sig'); });
+canvas.addEventListener('mouseup', () => drawing = false);
+canvas.addEventListener('mouseleave', () => drawing = false);
+canvas.addEventListener('touchstart', e => { e.preventDefault(); drawing = true; ctx.beginPath(); const p = getPos(e); ctx.moveTo(p.x, p.y); }, { passive: false });
+canvas.addEventListener('touchmove', e => { e.preventDefault(); if (!drawing) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); hasDrawnSig = true; canvas.classList.add('has-sig'); }, { passive: false });
+canvas.addEventListener('touchend', () => drawing = false);
+
+function clearCanvas() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  hasDrawnSig = false;
+  canvas.classList.remove('has-sig');
+}
+
+function setSigMode(mode) {
+  sigMode = mode;
+  document.querySelectorAll('.sig-tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('.sig-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + mode).classList.add('active');
+}
+
+function checkTyped() {
+  const v = document.getElementById('typedSig').value;
+  document.getElementById('typedSig').classList.toggle('has-sig', v.length > 2);
+}
+
+// DATE
+function setDate() {
+  const now = new Date();
+  const opts = { year: 'numeric', month: 'long', day: 'numeric' };
+  document.getElementById('currentDate').textContent = now.toLocaleDateString('fr-FR', opts);
+}
+setDate();
+
+// RECAP
+function updateRecap() {
+  const artiste = document.getElementById('f-artiste').value || '—';
+  const email = document.getElementById('f-email').value || '—';
+  const titre = document.getElementById('f-titre').value || '—';
+  const type = document.getElementById('f-type').value || '—';
+
+  document.getElementById('recap-artiste').textContent = artiste;
+  document.getElementById('recap-plan').textContent = selectedPlan.name;
+  document.getElementById('recap-prix').textContent = selectedPlan.price;
+  document.getElementById('recap-projet').textContent = `${titre} (${type})`;
+  document.getElementById('recap-email').textContent = email;
+}
+
+// ── SUBMIT ─────────────────────────────────────────────────────────────────
+function generateRef() {
+  return 'EPM-' + Date.now().toString(36).toUpperCase();
+}
+
+function submitContract() {
+  // Validate signature
+  if (sigMode === 'draw' && !hasDrawnSig) {
+    alert(lang === 'fr' ? 'Veuillez signer avant de soumettre.' : 'Silvouplè siyen anvan ou soumèt.');
+    return;
+  }
+  if (sigMode === 'type' && document.getElementById('typedSig').value.trim().length < 2) {
+    alert(lang === 'fr' ? 'Veuillez écrire votre nom.' : 'Ekri non ou anvan ou soumèt.');
+    return;
+  }
+
+  const ref = generateRef();
+  const artiste = document.getElementById('f-artiste').value;
+  const nom = document.getElementById('f-nom').value;
+  const email = document.getElementById('f-email').value;
+  const tel = document.getElementById('f-tel').value;
+  const titre = document.getElementById('f-titre').value;
+  const type = document.getElementById('f-type').value;
+  const genre = document.getElementById('f-genre').value;
+  const collab = document.getElementById('f-collab').value;
+  const dateSortie = document.getElementById('f-date').value;
+  const paiement = document.getElementById('f-paiement').value;
+  const notes = document.getElementById('f-notes').value;
+  const ig = document.getElementById('f-ig').value;
+  const fb = document.getElementById('f-fb').value;
+  const sigType = sigMode === 'type' ? document.getElementById('typedSig').value : '[Signature dessinée]';
+  const dateSign = document.getElementById('currentDate').textContent;
+
+  // Update success screen
+  document.getElementById('s-artiste').textContent = artiste;
+  document.getElementById('s-plan').textContent = selectedPlan.name;
+  document.getElementById('s-projet').textContent = `${titre} (${type})`;
+  document.getElementById('s-ref').textContent = ref;
+
+  // Show success
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.step-tab').forEach(t => { t.classList.remove('active'); t.classList.add('done'); });
+  document.getElementById('section-success').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Send email notification via EmailJS or direct mailto
+  const subject = `[EasyPromoMusic] Nouveau Contrat — ${artiste} — ${selectedPlan.name} — ${ref}`;
+  const body = `NOUVEAU CONTRAT SOUMIS\n\n` +
+    `Référence: ${ref}\n` +
+    `Date: ${dateSign}\n\n` +
+    `ARTISTE\n` +
+    `Nom complet: ${nom}\n` +
+    `Nom artiste: ${artiste}\n` +
+    `Email: ${email}\n` +
+    `Téléphone: ${tel}\n` +
+    `Instagram: ${ig}\n` +
+    `Facebook: ${fb}\n\n` +
+    `PLAN CHOISI\n` +
+    `Plan: ${selectedPlan.name}\n` +
+    `Prix: ${selectedPlan.price}\n` +
+    `Partage: ${selectedPlan.split} Artiste\n\n` +
+    `PROJET MUSICAL\n` +
+    `Titre: ${titre}\n` +
+    `Type: ${type}\n` +
+    `Genre: ${genre}\n` +
+    `Date de sortie: ${dateSortie}\n` +
+    `Collaborateurs: ${collab}\n\n` +
+    `PAIEMENT\n` +
+    `Mode: ${paiement}\n\n` +
+    `SIGNATURE\n` +
+    `Type: ${sigMode === 'draw' ? 'Dessinée' : 'Tapée'}\n` +
+    `Valeur: ${sigType}\n\n` +
+    `NOTES\n${notes}\n\n` +
+    `---\nEasyPromoMusic Publishing | easypromomusic@gmail.com`;
+
+  // Open mailto as fallback (works without backend)
+  const mailtoLink = `mailto:easypromomusic@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.open(mailtoLink, '_blank');
+}
+
+// Initial lang apply
+setLang('fr');
+</script>
+</body>
+</html>
